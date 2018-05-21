@@ -1,4 +1,4 @@
-define(['Water', 'Ryth2'], function(Water, thing){
+define(['Water', 'Ryth1'], function(Water, thing){
 	
 	let audioContext = Water.getAudioContext();
 
@@ -7,13 +7,13 @@ define(['Water', 'Ryth2'], function(Water, thing){
 
 	function playThing(){
 		let destroy = thing(outputNode);
-/*
+
 		setTimeout(()=>{
 			destroy();
 
 			setTimeout(playThing, 500);
 		}, 1000);
-	*/
+	
 	}
 
 	playThing();
