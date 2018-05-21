@@ -1,7 +1,5 @@
-define(['Water', 'Ryth3', 'MidiDevice'], function(Water, thing, MidiDevice){
+define(['Water', 'Ryth2'], function(Water, thing){
 	
-	MidiDevice.getKeystationStream()(v => console.log(v));
-
 	let audioContext = Water.getAudioContext();
 
 	let outputNode = audioContext.createGain();
