@@ -1,4 +1,4 @@
-define(['Water', 'Ryth1'], function(Water, thing){
+define(['Water', 'Ryth1', 'Signal'], function(Water, thing, Signal){
 	
 	let audioContext = Water.getAudioContext();
 
@@ -16,6 +16,16 @@ define(['Water', 'Ryth1'], function(Water, thing){
 	
 	}
 
-	playThing();
+	// playThing();
 
+  let osc = audioContext.createOscillator();
+  let signal = new Signal(100);
+  console.log(signal);
+  osc.frequency.value = 0;
+  signal.connect(osc.frequency);
+
+  osc.start();
+  osc.connect(audioContext.destination);
+
+  setInterval(()=> signal.gain.linearRampToValueAtTime(Math.random() * 300 + 100, audioContext.currentTime + 0.5), 1000);
 });
