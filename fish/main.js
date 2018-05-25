@@ -1,7 +1,7 @@
-define(['Water', 'Ryth1', 'Signal'], function(Water, thing, Signal){
+define(['Water', 'Ryth1', 'Signal', 'Osc', 'Patcher'], function(Water, thing, Signal, Osc, Patcher){
 	
 	let audioContext = Water.getAudioContext();
-
+	
 	let outputNode = audioContext.createGain();
 	outputNode.connect(audioContext.destination);
 
@@ -16,16 +16,13 @@ define(['Water', 'Ryth1', 'Signal'], function(Water, thing, Signal){
 	
 	}
 
-	// playThing();
+	let patcher = new Patcher();
+	let frequencySignal = new Signal(200);
+	let detuneOscSignal = new Signal(0.5);
+	
+	Osc(patcher.getPatch('LfoOut'), detuneOscSignal, new Signal(1))
+	console.log(patcher.getPatch('LfoOut'));
+	Osc(audioContext.destination, frequencySignal, patcher.getPatch('LfoOut'));
 
-  let osc = audioContext.createOscillator();
-  let signal = new Signal(100);
-  console.log(signal);
-  osc.frequency.value = 0;
-  signal.connect(osc.frequency);
-
-  osc.start();
-  osc.connect(audioContext.destination);
-
-  setInterval(()=> signal.gain.linearRampToValueAtTime(Math.random() * 300 + 100, audioContext.currentTime + 0.5), 1000);
+	setInterval(()=> frequencySignal.gain.linearRampToValueAtTime(Math.random() * 300 + 100, audioContext.currentTime + 1), 1000);
 });
