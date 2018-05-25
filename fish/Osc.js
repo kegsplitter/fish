@@ -6,7 +6,8 @@ define(['Water'], function(Water){
 		
 		frequencySignal.connect(osc.frequency);
 		detuneSignal.connect(osc.detune);
-		osc.frequency.value = 0;
+    osc.frequency.value = 0;
+    osc.detune.value = 0;
 		osc.start();
 		osc.connect(audioOutputNode);
 		
