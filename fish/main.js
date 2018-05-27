@@ -1,21 +1,8 @@
-define(['Water', 'Ryth1'], function(Water, thing){
+define(['Water', 'WhiteNoiseGenerator', 'BasicPlay'], function(Water, WhiteNoiseGenerator, BasicPlay){
 	
 	let audioContext = Water.getAudioContext();
-
-	let outputNode = audioContext.createGain();
-	outputNode.connect(audioContext.destination);
-
-	function playThing(){
-		let destroy = thing(outputNode);
-
-		setTimeout(()=>{
-			destroy();
-
-			setTimeout(playThing, 500);
-		}, 1000);
 	
-	}
+  let buffer = WhiteNoiseGenerator.createWhiteBuffer();
 
-	playThing();
-
-});
+  BasicPlay(audioContext.destination, buffer);
+})
