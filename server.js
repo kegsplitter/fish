@@ -9,5 +9,6 @@ app.get('/', (request, response)=> {
 
 app.use('/other', express.static(__dirname + '/other/'));
 app.use('/fish', express.static(__dirname + '/fish/'));
-
+app.use('/audioWorklet', express.static(__dirname + '/audioWorklet/'));
+app.use('/samples', express.static(__dirname + '/samples/'));
 app.listen(port, () => console.log(`FISH on port ${port}`));
