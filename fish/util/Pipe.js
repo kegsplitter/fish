@@ -16,6 +16,10 @@ define(function(){
 		Object.keys(this.watchHash).map(key => this.watchHash[key]).map(f => f(v));
 		this.childPipeList.map(pipe => pipe.push(v));
 	};
+
+	Pipe.prototype.pushOnly = function(){
+		return (v)=> this.push(v);
+	}
 	
 	Pipe.prototype.watch = function(f){
 		
