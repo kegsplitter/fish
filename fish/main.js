@@ -1,21 +1,12 @@
-define(['Water', 'SigPlay', 'BasicPlay', 'SampleLoader'], function(Water, SigPlay, BasicPlay, SampleLoader){
+
+define(['Water', 'Block5', 'MidiDevice', 'NoteManager'], function(Water, Block5, MidiDevice, NoteManager){
 	
   let audioContext = Water.getAudioContext();
+  let noteManager = new NoteManager((note)=> Block5(audioContext.destination, note.hz));
+  let keyPipe = new Water.Pipe();
+  MidiDevice.getKeystationStream()(keyPipe.pushOnly());
+
+  keyPipe.map(noteManager.pushOnly());
+  // Block5(audioContext.destination, 440);
   
-  SampleLoader.loadSample('/samples/rats.wav', 'rats')
-    .then(sampleObject => {
-      console.log(sampleObject);
-      // BasicPlay(audioContext.destination, sampleObject.buffer)
-
-      SigPlay.then(Test => {
-
-        let test = new Test(audioContext);
-
-        BasicPlay(test, sampleObject.buffer, true);
-        // BasicPlay(audioContext.destination, sampleObject.buffer);
-        test.connect(audioContext.destination);
-
-      });
-    });
-	
 })
