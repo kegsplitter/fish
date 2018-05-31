@@ -1,17 +1,17 @@
 define(['Water'], function(Water){
-  
-  let audioContext = Water.getAudioContext();
-  
+
   class TestWorkletNode extends AudioWorkletNode {
-    constructor(context) {
-      super(context, 'test-worklet-processor');
+    constructor() {
+      super(Water.getAudioContext(), 'test-worklet-processor');
+    }
+
+    static setup(){
+      return Water.getAudioContext()
+        .audioWorklet
+        .addModule('audioWorklet/test.js')
+        .then(()=> TestWorkletNode);
     }
   }
 
-  return audioContext.audioWorklet.addModule('audioWorklet/test.js').then(()=>{
-    let test = new TestWorkletNode(audioContext);
-    console.log(test);
-
-    return TestWorkletNode;
-  })
+  return TestWorkletNode;
 })
