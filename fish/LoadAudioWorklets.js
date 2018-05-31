@@ -1,5 +1,6 @@
-define(['SigPlay'], function(SigPlay){
+define(['SigPlay', 'PwmOscillator'], function(SigPlay, PwmOscillator){
   return () => Promise.all([
-    SigPlay.setup()
+    SigPlay.setup(),
+    PwmOscillator.setup()
   ]);
 });
