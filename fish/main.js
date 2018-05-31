@@ -11,9 +11,19 @@ define(['Water', 'Block5', 'MidiDevice', 'NoteManager', 'PwmOscillator'], functi
   	keyPipe.map(noteManager.pushOnly());
 	}
   // Block5(audioContext.destination, 440);
-	console.log(PwmOscillator);
+	// console.log(PwmOscillator);
 
 	let pwm = new PwmOscillator();
+  console.log('pwm.pulseWidth', pwm.parameters.get('pulseWidth'));
+  console.log('pwm', pwm);
+  console.log('f', pwm.frequency);
+  console.log('width', pwm.pulseWidth);
 
+  pwm.parameters.get('frequency').value = 200;
+  let lfo = audioContext.createOscillator();
+  lfo.frequency.value = 0.5;
+  lfo.connect(pwm.parameters.get('pulseWidth'));
+  lfo.start();
+  
 	pwm.connect(audioContext.destination);
 })

@@ -1,20 +1,15 @@
 const PI = Math.PI;
 const TAU = Math.PI * 2;
+const MAXVALUE = 0.9;
+const MINVALUE = -0.9;
 
 function squareOsc(radian, pwm) {
 	radian = Math.abs(radian % TAU);
-	
-	if(pwm === undefined){
-		pwm = 1;
-	} else {
-		pwm = Math.abs(pwm);
-		if(pwm > 1) pwm = 1;
-	}
-	
+		
 	if(radian < PI * pwm) {
-		return 1;
+		return MAXVALUE;
 	} else if (radian > PI && radian < PI + (PI * pwm)){
-		return -1;
+		return -MINVALUE;
 	} else {
 		return 0;
 	}

@@ -4,6 +4,14 @@ define(['Water'], function(Water){
       super(Water.getAudioContext(), 'pwm');
     }
 
+    get frequency() {
+      return this.parameters.get('frequency');
+    }
+
+    get pulseWidth() {
+      return this.parameters.get('pwm');
+    }
+
     static setup(){
       return Water.getAudioContext()
         .audioWorklet
