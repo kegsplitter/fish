@@ -1,9 +1,10 @@
-define(['Water'], function(Watcher){
-  
+define(['Water'], function(Water){
+
   class Patcher{
     constructor(){
       this.patchHash = {};
       this.nodeHash = {};
+      this.pipeHash = {};
     }
 
     getPatch(id){
@@ -18,6 +19,11 @@ define(['Water'], function(Watcher){
 
     getNode(name){
       return this.nodeHash[name];
+    }
+
+    getPipe(name){
+      if(!this.pipeHash.hasOwnProperty(name)) this.pipeHash[name] = new Water.Pipe();
+      return this.pipeHash[name];
     }
 
     destroy(){
@@ -35,8 +41,14 @@ define(['Water'], function(Watcher){
           return null;
         })
       this.nodeHash = null;
+
+      this.pipeHash = Object.keys(this.pipeHash)
+        .map(key => this.pipeHash[key])
+        .map(pipe => pipe.destroy())
+        .fill(null);
+      this.pipeHash = null;
     }
   }
-  
+
   return Patcher;
 });
