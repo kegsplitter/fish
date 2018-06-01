@@ -9,7 +9,7 @@ define(['Water'], function(Water){
     }
 
     get pulseWidth() {
-      return this.parameters.get('pwm');
+      return this.parameters.get('pulseWidth');
     }
 
     static setup(){
