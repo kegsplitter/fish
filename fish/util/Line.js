@@ -1,8 +1,8 @@
 define(['util/Pipe'], function(Pipe){
   class Line {
-    constructor() {
-      this.up = new Pipe();
-      this.down = new Pipe();
+    constructor(downF, upF) {
+      this.down = new Pipe(downF);
+      this.up = new Pipe(upF);
     }
 
     connect(line){
