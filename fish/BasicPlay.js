@@ -1,10 +1,10 @@
 define(['Water', 'EndGain'], function(Water, EndPlay){
-  return function(audioOutputNode, sample, loop){
+  return function(audioOutputNode, sample, loop, startTime){
 
     let play = Water.getAudioContext().createBufferSource();
     play.buffer = sample;
     
-    play.start();
+    play.start(startTime ? startTime : Water.getAudioContext().currentTime);
     play.loop = loop ? true : false;
     
     let destroyEnd = EndPlay(audioOutputNode, play);

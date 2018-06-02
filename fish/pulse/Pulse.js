@@ -1,4 +1,4 @@
-define(['Water', 'BarStartGenerator'], function(Water, BarStartGenerator){
+define(['Water', 'pulse/BarStartGenerator'], function(Water, BarStartGenerator){
   return function(outPipe, startTime, duration){
 
     let gen = BarStartGenerator(startTime, duration);
@@ -8,7 +8,10 @@ define(['Water', 'BarStartGenerator'], function(Water, BarStartGenerator){
 
       if(!gate) return;
 
-      outPipe.push(targetTime);
+      outPipe.push({
+        targetTime : targetTime,
+        duration   : duration
+      });
 
       targetTime = gen.next().value;
 

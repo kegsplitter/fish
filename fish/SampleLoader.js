@@ -17,7 +17,7 @@ define(['Water'], function(Water){
   
   function buildSampleObject(name, buffer){
     return {
-      name: name,
+      id: name,
       buffer: buffer
     }
   }
