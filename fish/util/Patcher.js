@@ -26,6 +26,18 @@ define(['util/Pipe', 'util/getAudioContext'], function(Pipe, getAudioContext){
       return this.pipeHash[name];
     }
 
+    subscribe(name) {
+      return this.getPipe(name).watchOnly();
+    }
+
+    publish(name) {
+      return this.getPipe(name).pushOnly();
+    }
+
+    connect(sub, pub) {
+      this.getPipe(sub).map(this.getPipe(pub).pushOnly());
+    }
+
     destroy(){
       this.hashPatch = Object.keys(this.hashPatch)
         .map(key => this.hashPatch[key])
