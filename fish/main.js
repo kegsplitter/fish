@@ -1,40 +1,27 @@
 
-define(['Water', 'DrumLoader1', 'BasicPlay', 'sequencer/Sequencer', 'pulse/Pulse', 'SampleBank'], function(Water, DrumLoader1, BasicPlay, Sequencer, Pulse, SampleBank){
+define(['play/DrumLoader1Play'], function(DrumLoader1Play){
 
-  const { Bone } = Sequencer;
+  DrumLoader1Play();
   
-  let audioContext = Water.getAudioContext();
-  let patcher = new Water.Patcher();
+  // PIPE TEST
+  /*
+  const Pipe = Water.Pipe;
 
-  let handList = [
-    [
-      'conga_l', 0, 8
-    ],
-    [
-      'conga_l', 3, 8
-    ],
-    [
-      'conga_l', 4, 8
-    ]
-  ];
+  let p = new Pipe().Head();
 
-  let boneList = Bone.processHandList(handList);
-
-  DrumLoader1().then(sampleList => {
+  p
+    .map((v) => v.type === 'number' ? v : null)
+    .setName('numberRoute')
+    .getHead()
+    .map((v) => v.type === 'string' ? v : null)
+    .setName('stringRoute')
+    .map((v) => console.log('STRING', v.value))
+    .name('numberRoute')
+    .map(v => console.log('NUMBER', v.value));
     
-    Pulse(patcher.getPipe('pulseOut'), audioContext.currentTime + 1, 0.8);
-
-    Sequencer.Ready(patcher.getPipe('readyOut'), patcher.getPipe('pulseOut'), patcher.getPipe('readyCommand'));
-    SampleBank(patcher.getPipe('sampleBankOut'), patcher.getPipe('readyOut'), patcher.getPipe('sampleBankCommand'));
-
-    patcher.getPipe('sampleBankOut')
-      .watch(sample => BasicPlay(audioContext.destination, sample.buffer, false, sample.targetTime));
-    
-    boneList.forEach(bone => patcher.getPipe('readyCommand').push(Water.Command('add', bone)));
-    sampleList.forEach(sample => patcher.getPipe('sampleBankCommand').push(Water.Command('add', sample)));
-
-  });
-  
+    p.push({ type : 'string', value: 'BEAST HAWK OWL'})
+    p.push({type : 'number', value: 897458745897458975})
+  */
 /*
 	let audioContext = Water.getAudioContext();
 	let patcher = new Patcher();
