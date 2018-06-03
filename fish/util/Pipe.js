@@ -85,7 +85,9 @@ define(function(){
 	}
 	
 	Pipe.prototype.getName = function(name){
-		return this.getHead().namePipeList.find(pipe => pipe.name === name);
+    let pipe = this.getHead().namePipeList.find(pipe => pipe.name === name);
+    if(!pipe) throw `Unknown name ${name}`;
+    return pipe;
 	}
 
 	Pipe.prototype.name = function(name){
