@@ -14,9 +14,9 @@ describe("Pipe.js", function(){
 
   it('pipe.watch', function(done){
     r(function(Pipe){
-      
+
       let p = new Pipe();
-      
+
       p.watch(s => {
         if(s !== testWord) throw `Bad value ${s}`;
         done();
@@ -52,7 +52,7 @@ describe("Pipe.js", function(){
           if(s !== testWord) throw 'Not filtering correctly';
           done();
         });
-      
+
         pipe.push('NOT TEST WORD');
         pipe.push({ one : testWord});
         pipe.push(234234);
@@ -155,5 +155,42 @@ describe("Pipe.js", function(){
         done();
       }
     })
+  })
+
+  it('should turn off', function(done){
+    r(Pipe => {
+        let output = [];
+
+        new Pipe((v)=> output.push(v))
+          .push(1)
+          .off()
+          .push(2)
+          .on()
+          .push(3);
+
+        if(output.find(v => v === 2)) throw 'passing values when off';
+        if(!output.find(v => v === 1) || !output.find(v => v === 3)) throw 'not pasing on values';
+        done();
+    })
+  });
+
+  it('should detach', function(done){
+    r(Pipe => {
+      new Pipe().Head()
+        .map(v => {
+          if(v !== testWord) throw 'leaked values';
+        })
+        .setName('normal')
+        .detach('detachedPipe')
+        .map((v)=> {
+          if(v === testWord) throw 'leaked values in detached'
+        })
+        .getHead()
+        .push(testWord)
+        .name('detachedPipe')
+        .push('notTestWords');
+
+        done();
+    });
   })
 })

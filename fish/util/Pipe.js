@@ -2,17 +2,18 @@
 define(function(){
 	class Pipe{
 	  constructor(f, headPipe){
-		
+
 		  this.f = f ? f : (v)=>v;
 		  if(headPipe) this.headPipe = headPipe;
-		
+
 		  this.watchHash = {};
 		  this.watchCount = 0;
 
 		  this.childPipeList = [];
 		  this.isHead = false;
+			this.gate = true;
 	  }
-    
+
     Head(){
 
       if(this.headPipe) throw 'Pipe already has head';
@@ -24,9 +25,9 @@ define(function(){
     }
 
     push(v){
-      
+			if(!this.gate) return this;
       v = this.f(v);
-      if(v === null) return;
+      if(v === null) return this;
       Object.keys(this.watchHash).map(key => this.watchHash[key]).map(f => f(v));
       this.childPipeList.map(pipe => pipe.push(v));
 
@@ -36,12 +37,12 @@ define(function(){
     pushOnly(){
       return (v)=> this.push(v);
     }
-    
+
     watch(f){
-      
+
       let id = this.watchCount++;
       this.watchHash[id] = f;
-      
+
       return () => delete this.watchHash[id];
     }
 
@@ -83,7 +84,7 @@ define(function(){
 
       return this;
     }
-    
+
     getName(name){
       let pipe = this.getHead().namePipeList.find(pipe => pipe.name === name);
       if(!pipe) throw `Unknown name ${name}`;
@@ -93,7 +94,23 @@ define(function(){
     name(name){
       return this.getName(name);
     }
+
+		on(){
+			this.gate = true;
+			return this;
+		}
+
+		off(){
+			this.gate = false;
+			return this;
+		}
+
+		detach(name) {
+			if(!name) throw 'name detached pipe';
+
+			return this.getHead().map().off().map().setName(name);
+		}
   }
-  
+
 	return Pipe;
 });
