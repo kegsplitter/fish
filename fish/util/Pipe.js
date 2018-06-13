@@ -26,10 +26,26 @@ define(function(){
 
     push(v){
 			if(!this.gate) return this;
-      v = this.f(v);
-      if(v === null) return this;
-      Object.keys(this.watchHash).map(key => this.watchHash[key]).map(f => f(v));
-      this.childPipeList.map(pipe => pipe.push(v));
+
+			if(this.blockValueList) {
+				this.blockValueList.push(v);
+				return this;
+			}
+
+			if(this._async){
+				Promise.resolve(v)
+					.then(v => this.f(v))
+					.then(v => {
+						if(v === null) return;
+						Object.keys(this.watchHash).map(key => this.watchHash[key]).map(f => f(v));
+			      this.childPipeList.map(pipe => pipe.push(v));
+					})
+			} else {
+				v = this.f(v);
+	      if(v === null) return this;
+	      Object.keys(this.watchHash).map(key => this.watchHash[key]).map(f => f(v));
+	      this.childPipeList.map(pipe => pipe.push(v));
+			}
 
       return this;
     };
@@ -51,6 +67,13 @@ define(function(){
       this.childPipeList.push(pipe);
       return pipe;
     }
+
+		mapAsync(f){
+			let pipe = this.map(f);
+			pipe._async = true;
+
+			return pipe;
+		}
 
     // pass a context set versio of the watch function
     watchOnly(){
@@ -77,16 +100,16 @@ define(function(){
       let head = this.getHead();
 
       // check that name is not already taken
-      if(head.namePipeList.find(pipe => pipe.name === name)) throw 'name already taken';
+      if(head.namePipeList.find(pipe => pipe._name === name)) throw 'name already taken';
 
-      this.name = name;
+      this._name = name;
       if(!head.namePipeList.find(pipe => pipe === this)) head.namePipeList.push(this);
 
       return this;
     }
 
     getName(name){
-      let pipe = this.getHead().namePipeList.find(pipe => pipe.name === name);
+      let pipe = this.getHead().namePipeList.find(pipe => pipe._name === name);
       if(!pipe) throw `Unknown name ${name}`;
       return pipe;
     }
@@ -94,6 +117,10 @@ define(function(){
     name(name){
       return this.getName(name);
     }
+
+		getNameOnly(){
+			return (name) => this.getName(name);
+		}
 
 		on(){
 			this.gate = true;
@@ -109,6 +136,21 @@ define(function(){
 			if(!name) throw 'name detached pipe';
 
 			return this.getHead().map().off().map().setName(name);
+		}
+
+		block(){
+			this.blockValueList = [];
+			return this;
+		}
+
+		flush(){
+			if(!this.blockValueList) return;
+
+			let blockValueList = this.blockValueList;
+			this.blockValueList = null;
+			blockValueList.forEach(v => this.push(v));
+
+			return this;
 		}
   }
 
