@@ -8,7 +8,7 @@ define(['Water'], function(Water){
     }
 
     getPatch(id){
-      if(!this.patchHash.hasOwnProperty(id)) this.patchHash[id] = Watcher.getAudioContext().createGain();
+      if(!this.patchHash.hasOwnProperty(id)) this.patchHash[id] = Water.getAudioContext().createGain();
       return this.patchHash[id];
     }
 

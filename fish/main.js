@@ -1,7 +1,16 @@
 
-define(['play/DrumLoader1Play'], function(DrumLoader1Play){
+define(['Water', 'Ryth2', 'Ryth1', 'Ryth3', 'Block5Player'], function(Water, r2, r1, r3, Block5Player){
 
-  DrumLoader1Play();
+  // INSTRUMENTS
+  Block5Player(Water.getAudioContext().destination);
+  
+  // NOISES
+  // r2(Water.getAudioContext().destination)
+  // r1(Water.getAudioContext().destination)
+  // r3(Water.getAudioContext().destination)
+
+
+  // DrumLoader1Play();
   
   // PIPE TEST
   /*
