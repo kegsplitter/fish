@@ -192,5 +192,43 @@ describe("Pipe.js", function(){
 
         done();
     });
-  })
+  });
+
+  it('block/flush', function(done){
+    r(Pipe => {
+
+      let l = [];
+
+      new Pipe().Head()
+        .map()
+        .setName('input')
+        .map((v)=> l.push(v))
+        .setName('output')
+        .name('input')
+        .block()
+        .push(0)
+        .push(1)
+        .name('output')
+        .push(2)
+        .name('input')
+        .flush();
+
+        if(l[0] !== 2 || l[1] !== 0 || l[2] !== 1) throw `block flush error ${l}`;
+        done();
+    })
+  });
+
+  it('asyncMap should make work with Promises', function(done){
+    r(Pipe => {
+        new Pipe().Head()
+          .mapAsync((v) => new Promise(function(resolve, reject){
+            setTimeout(()=> resolve(v), 0);
+          }))
+        .map(v => {
+          if(v !== testWord) throw 'test word not passed async';
+          done();
+        })
+        .push(testWord)
+    });
+  });
 })
