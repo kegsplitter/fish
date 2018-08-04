@@ -38,7 +38,8 @@ define(['Water'], function(Water){
 		
 		getMidiDevice('Keystation Mini 32')
 			.then(device => {
-				device.onmidimessage = (message) => {
+        device.onmidimessage = (message) => {
+          
 					p.push({
 						type     : message.data[0],
 						note     : message.data[1],
