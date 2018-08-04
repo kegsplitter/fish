@@ -14,7 +14,6 @@ function getQuerty(Pipe){
   }
   
   document.body.addEventListener('keydown', (e)=>{
-    
     changeState(e.keyCode, true);
   })
 
@@ -27,10 +26,15 @@ function getQuerty(Pipe){
 
 
 
-define(['Water', 'Block5', 'MidiDevice', 'NoteManager'], function(Water, Block5, MidiDevice, NoteManager){
+define(['Water', 'Block5', 'MidiDevice', 'NoteManager', 'util/Querty'], function(Water, Block5, MidiDevice, NoteManager, Querty){
   
   return function(audioOutput){
-    let quertyOut = getQuerty(Water.Pipe);
+    let quertyOut = Querty.map(o => ({
+      type: '',
+      note: o.key,
+      velocity: o.on ? 127 : 0
+    }));
+    
     let noteManager = new NoteManager((note)=> Block5(audioOutput, note.hz));
     let keyPipe = new Water.Pipe();
     quertyOut.watch(n => keyPipe.push(n));
