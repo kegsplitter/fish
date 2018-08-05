@@ -42,7 +42,7 @@ define(['Water', 'Block5', 'MidiDevice', 'NoteManager', 'util/Querty'], function
 
     keyPipe.map(noteManager.pushOnly());
     
-    keyPipe.map(v => console.log(v));
+    // keyPipe.map(v => console.log(v));
     // TODO: make destroy
     return ()=> null;
   }

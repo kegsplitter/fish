@@ -27,5 +27,5 @@ define(["util/Pipe"], function(Pipe){
   document.body.addEventListener('keydown', downKey);
   document.body.addEventListener('keyup', upKey);
 
-  return output.watchOnly();
+  return output;
 });
