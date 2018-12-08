@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
     "mtof": "^1.0.2"
   },
   "devDependencies": {

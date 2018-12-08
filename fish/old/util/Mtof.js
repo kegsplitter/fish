@@ -1,5 +1,6 @@
 // from https://www.npmjs.com/package/mtof
-function mtof(midiNote, concertPitch) {
+define(function(){
+  function mtof(midiNote, concertPitch) {
     if (concertPitch === undefined) concertPitch = 440;
 
     if (typeof midiNote !== 'number') {
@@ -11,6 +12,7 @@ function mtof(midiNote, concertPitch) {
     }
 
     return Math.pow(2, (midiNote - 69) / 12) * concertPitch;
-}
-
-module.exports = mtof;
+  }
+  
+  return mtof;
+})
