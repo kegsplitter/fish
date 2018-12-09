@@ -18,7 +18,7 @@ class NoteManager{
 
       // if this is velocity 0 then destroy
       if(noteObject.velocity === 0) {
-        this.destroyNote(noteObject.note);
+        this.destroyNote(noteObject.note, noteObject.timeStamp);
       } else {
         // if this note is being played then destroy the old
         this.destroyNote(noteObject.note, noteObject.timeStamp);

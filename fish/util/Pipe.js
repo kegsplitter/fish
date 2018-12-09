@@ -20,6 +20,11 @@ class Pipe{
         return pipe;
     }
 
+    pipe(childPipe){
+        this.watch(childPipe.hardPush())
+        return childPipe;
+    }
+
     push(data){
         for(let i = 0; i < this._fList.length;i++){
             data = this._fList[i](data);

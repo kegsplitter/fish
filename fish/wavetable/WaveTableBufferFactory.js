@@ -13,6 +13,16 @@ function createWhiteNoiseBuffer(duration = 1){
     return buffer;
 }
 
+function createSignalBuffer(){
+    let audioContext = getAudioContext();
+    let buffer = audioContext.createBuffer(1, audioContext.sampleRate, audioContext.sampleRate);
+    let channelData = buffer.getChannelData(0);
+    channelData.forEach((v, i)=> channelData[i] = 1);
+
+    return buffer;
+}
+
 module.exports = {
-    createWhiteNoiseBuffer: createWhiteNoiseBuffer
+    createWhiteNoiseBuffer: createWhiteNoiseBuffer,
+    createSignalBuffer: createSignalBuffer
 };

@@ -25,7 +25,7 @@ define(['Water'], function(Water){
 		return new Promise((resolve, reject) =>{
 			function request(){
 				innerGet().then(device => resolve(device)).catch(error => {
-					console.error(error);
+					// console.error(error);
 					setTimeout(request, 1000)
 				})
 			}
