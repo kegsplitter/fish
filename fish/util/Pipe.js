@@ -11,6 +11,9 @@ class Pipe{
         } else {
             this._fList = f.slice();
         }
+
+        this._lastMode = false;
+        this._lastData = null;
     }
 
     child(f){
@@ -32,7 +35,11 @@ class Pipe{
             if(data === null) return;
         }
 
+        if(this._lastMode) this._lastData = data;
+
         this._watchList.forEach(f => f(data));
+
+        return this;
     }
 
     hardPush(){
@@ -42,11 +49,17 @@ class Pipe{
     watch(f){
         this._watchList.push(f);
 
+        if(this._lastMode && this._lastData !== null) f(this._lastData);
         return ()=> this._watchList = this._watchList.filter(ff => ff !== f);
     }
     
     unSubscribe(){
 
+    }
+
+    last(){
+        this._lastMode = true;
+        return this;
     }
 }
 
