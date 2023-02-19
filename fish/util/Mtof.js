@@ -1,7 +1,5 @@
 // from https://www.npmjs.com/package/mtof
-function mtof(midiNote, concertPitch) {
-    if (concertPitch === undefined) concertPitch = 440;
-
+function mtof(midiNote, concertPitch = 440) {
     if (typeof midiNote !== 'number') {
       throw new TypeError("'mtof' expects its first argument to be a number.")
     }

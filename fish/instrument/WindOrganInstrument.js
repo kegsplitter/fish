@@ -4,6 +4,7 @@ const audioContext = require('../util/AudioContext.js').getAudioContext();
 const WindOrganVoice = require('./windOrgan/WindOrganVoice.js');
 // const {createPla} = require('../wavetable/WaveTablePlayers.js');
 const {createWhiteNoiseBuffer} = require('../wavetable/WaveTableBufferFactory.js');
+
 class WindOrganInstrument{
     constructor(outputAudioNode, midiInputPipe){
 
