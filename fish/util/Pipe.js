@@ -43,4 +43,4 @@ class Pipe {
   unSubscribe() {}
 }
 
-module.exports = Pipe;
+export default Pipe;

@@ -1,5 +1,5 @@
-const {getAudioContext, isOffline} = require('../../util/AudioContext.js');
-const {createPlayer} = require('../../wavetable/WaveTablePlayers.js');
+import { getAudioContext, isOffline} from '../../util/AudioContext.js';
+import { createPlayer } from '../../wavetable/WaveTablePlayers.js';
 
 let rampDown = 0.01;
 
@@ -60,4 +60,4 @@ function windOrganVoice(audioOutputNode, buffer, startTime, baseHz){
     }
 }
 
-module.exports = windOrganVoice;
+export default windOrganVoice;

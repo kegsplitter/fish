@@ -1,14 +1,14 @@
 // wind Organ
-const NoteManager = require('../util/NoteManager.js');
-const audioContext = require('../util/AudioContext.js').getAudioContext();
-const WindOrganVoice = require('./windOrgan/WindOrganVoice.js');
+import NoteManager from '../util/NoteManager.js';
+import { getAudioContext } from '../util/AudioContext.js';
+import WindOrganVoice from './windOrgan/WindOrganVoice.js';
 // const {createPla} = require('../wavetable/WaveTablePlayers.js');
-const {createWhiteNoiseBuffer} = require('../wavetable/WaveTableBufferFactory.js');
+import { createWhiteNoiseBuffer } from '../wavetable/WaveTableBufferFactory.js';
 
-class WindOrganInstrument{
+export class WindOrganInstrument{
     constructor(outputAudioNode, midiInputPipe){
 
-        let localOutput = audioContext.createGain();
+        let localOutput = getAudioContext().createGain();
         localOutput.connect(outputAudioNode);
 
         this._output = localOutput;
@@ -26,5 +26,3 @@ class WindOrganInstrument{
         this._noteManager.destroy();
     }
 }
-
-module.exports = WindOrganInstrument;

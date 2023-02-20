@@ -11,4 +11,4 @@ function mtof(midiNote, concertPitch = 440) {
     return Math.pow(2, (midiNote - 69) / 12) * concertPitch;
 }
 
-module.exports = mtof;
+export default mtof;

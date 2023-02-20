@@ -10,11 +10,10 @@ let _getAudioContext = () => {
     return audioContext;
 }
 
-function isOffline(){
+export function isOffline(){
     return false;
 }
 
-module.exports = {
-    getAudioContext: () => _getAudioContext(),
-    isOffline: isOffline
-};
+export function getAudioContext(){
+    return _getAudioContext();
+}

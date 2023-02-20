@@ -1,6 +1,6 @@
 // Querty
-const Pipe = require('../../util/Pipe.js');
-const {getAudioContext} = require('../../util/AudioContext.js');
+import Pipe from '../../util/Pipe.js';
+import { getAudioContext } from '../../util/AudioContext.js';
 
 // TODO: standardise midi
 // remove object wrapper - get used to midi data array (type, note, velocity)
@@ -41,4 +41,4 @@ function getQuertyPipe(){
     return outputPipe ? outputPipe : setup();
 }
 
-module.exports = getQuertyPipe;
+export default getQuertyPipe;

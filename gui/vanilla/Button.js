@@ -1,6 +1,6 @@
 const dummyF = () => {};
 
-async function createBasicButton(text, f = dummyF, parent = document.body){
+export async function createBasicButton(text, f = dummyF, parent = document.body){
     const button = document.createElement('button');
     button.innerText = text;
     parent.appendChild(button);
@@ -13,8 +13,4 @@ async function createBasicButton(text, f = dummyF, parent = document.body){
 
     button.remove();
     f();
-}
-
-module.exports = {
-    createBasicButton
 }

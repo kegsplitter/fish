@@ -1,5 +1,5 @@
-const Clone = require('./Clone.js');
-const Mtof = require('./Mtof.js');
+import Clone from './Clone.js';
+import Mtof from'./Mtof.js';
 
 class NoteManager{
     // create function needs to be something that takes midi and audio node and outputs
@@ -51,4 +51,4 @@ class NoteManager{
     }
   }
 
-  module.exports = NoteManager;
+  export default NoteManager;

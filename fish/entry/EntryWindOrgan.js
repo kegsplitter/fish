@@ -1,9 +1,9 @@
 // EntryWindOrgan
-const { createBasicButton } = require('../../gui/vanilla/Button');
+import { createBasicButton } from '../../gui/vanilla/Button';
 
-const WindOrganInstrument = require('../instrument/WindOrganInstrument.js');
-const QuertyMidi = require('../midi/browser/QuertyMidi.js');
-const {getAudioContext} = require('../util/AudioContext.js');
+import { WindOrganInstrument} from '../instrument/WindOrganInstrument.js';
+import QuertyMidi from '../midi/browser/QuertyMidi.js';
+import { getAudioContext }  from '../util/AudioContext.js';
 
 async function main(){
     await createBasicButton("Setup");
@@ -11,5 +11,4 @@ async function main(){
     const inst = new WindOrganInstrument(ac.destination, QuertyMidi());
 }
 
-// window.addEventListener('load', main);
 main();
