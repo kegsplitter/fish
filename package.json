@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "mtof": "^1.0.2",
+    "nanoid": "^4.0.1",
     "slug": "^1.1.0"
   },
   "devDependencies": {

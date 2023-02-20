@@ -1,3 +1,5 @@
+// TODO: Capitals for methods!
+// DESTROY PIPE, replace with NeoPipe;
 class Pipe {
   constructor(f) {
     this._watchList = [];
@@ -44,3 +46,36 @@ class Pipe {
 }
 
 export default Pipe;
+
+export function NeoPipe(){
+  let fList = [];
+
+  function Push(data){
+    for(const f of fList) {
+      f(data);
+    }
+  }
+  function Connect(f){
+    fList.push(f);
+
+    return () => {
+      const newList = [];
+
+      for(const ff of fList){
+        if(ff !== f ) newList.push(ff);
+      }
+
+      fList = newList
+    }
+  }
+
+  function Destroy(){
+    fList = [];
+  }
+
+  return {
+    Push,
+    Connect,
+    Destroy
+  };
+}

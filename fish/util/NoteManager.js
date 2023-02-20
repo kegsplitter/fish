@@ -4,11 +4,11 @@ import Mtof from'./Mtof.js';
 class NoteManager{
     // create function needs to be something that takes midi and audio node and outputs
     // a stop function
-    constructor(createFunction, midiInput){
+    constructor(createFunction, midiInputPipe){
       this.destroyHash = {};
       this.createFunction = createFunction;
 
-      if(midiInput) this._unWatchMidiInput = midiInput.watch(note => this.push(note));
+      if(midiInputPipe) this._unWatchMidiInput = midiInputPipe.Connect(note => this.push(note));
     }
 
     push(noteObject){

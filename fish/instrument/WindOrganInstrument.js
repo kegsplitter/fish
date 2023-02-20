@@ -2,7 +2,6 @@
 import NoteManager from '../util/NoteManager.js';
 import { getAudioContext } from '../util/AudioContext.js';
 import WindOrganVoice from './windOrgan/WindOrganVoice.js';
-// const {createPla} = require('../wavetable/WaveTablePlayers.js');
 import { createWhiteNoiseBuffer } from '../wavetable/WaveTableBufferFactory.js';
 
 export class WindOrganInstrument{
