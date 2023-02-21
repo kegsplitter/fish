@@ -8,11 +8,11 @@ export const INPUT_LIST = ["None", "Qwerty", "Midi"]
 function Controller(){
     const pipe = NeoPipe();
     const selectAtom = new Atom(INPUT_LIST[1]);
-    let unSub = nextSub(selectAtom.Value());
+    let unSub = nextSub(selectAtom.Value(), pipe)
 
     selectAtom.Subscribe(label => {
         unSub();
-        unSub = newSub(label);
+        unSub = nextSub(label, pipe)
     });
 
     return {
@@ -21,14 +21,19 @@ function Controller(){
     }
 }
 
-function nextSub(label){
+function nextSub(label, outPipe){
+   const pipe = nextPipe(label);
+
+   return pipe.Connect(data => outPipe.Push(data));
+}
+
+function nextPipe(label){
     switch(label) {
-        
-        case "Querty": return getQuertyPipe();
+        case "Qwerty": return getQuertyPipe();
         case "Midi": 
         case "None":
         default:
-            return () => {};
+            return new NeoPipe();
     }
 }
 

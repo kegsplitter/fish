@@ -7,12 +7,12 @@ import DropDown from './DropDown';
 
 import { INPUT_LIST } from '../../fish/util/Controller';
 
-function* WindOrganGui(){
+function* WindOrganGui(state){
     const id = `WindOrganGui-${nanoid()}`;
 
-    const attackAtom = new Atom(0);
-    const releaseAtom = new Atom(0);
-    const selectedInputAtom = new Atom(INPUT_LIST[1])
+    const attackAtom = state.attack;
+    const releaseAtom = state.release;
+    const selectedInputAtom = state.selectedInput;
 
     const attackInputComponent = NumberInput({
         numberAtom: attackAtom,
@@ -28,7 +28,7 @@ function* WindOrganGui(){
 
     const panicButtonComponent = Button({
         label: 'Panic!',
-        callback: () => {}
+        callback: () => state.panic.Push()
     });
 
     const inputDropDownComponent = DropDown({

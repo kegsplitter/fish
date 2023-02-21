@@ -1,5 +1,5 @@
 // Querty
-import Pipe from '../../util/Pipe.js';
+import {NeoPipe} from '../../util/Pipe.js';
 import { getAudioContext } from '../../util/AudioContext.js';
 
 // TODO: standardise midi
@@ -9,7 +9,7 @@ let outputPipe = null;
 function setup(){
     const audioContext = getAudioContext();
 
-    outputPipe = new Pipe();
+    outputPipe = new NeoPipe();
     let stateHash = {};
 
     function changeState(keyCode, state){
@@ -18,7 +18,7 @@ function setup(){
         if(stateHash[keyCode] === state) return;
 
         stateHash[keyCode] = state;
-        outputPipe.push({
+        outputPipe.Push({
             timeStamp: audioContext.currentTime,
             type: '',
             note: keyCode,

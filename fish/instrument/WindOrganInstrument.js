@@ -24,4 +24,8 @@ export class WindOrganInstrument{
         this._output = null;
         this._noteManager.destroy();
     }
+
+    panic(){
+        this._noteManager.panic();
+    }
 }
