@@ -38,7 +38,6 @@ class Pipe {
 
   watch(f) {
     this._watchList.push(f);
-
     return () => (this._watchList = this._watchList.filter(ff => ff !== f));
   }
 

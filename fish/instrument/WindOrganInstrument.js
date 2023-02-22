@@ -12,20 +12,21 @@ export class WindOrganInstrument{
 
         this._output = localOutput;
 
-        let noteManager = new NoteManager((midiNote)=> WindOrganVoice(this._output, this._whiteNoiseBuffer, midiNote.timeStamp, midiNote.hz), midiInputPipe);
+        let noteManager = new NoteManager((midiNote)=> WindOrganVoice(this._output, this._whiteNoiseBuffer, midiNote.timeStamp, midiNote.hz));
 
+        midiInputPipe.Connect(noteManager.Push)
+        
         this._noteManager = noteManager;
-
         this._whiteNoiseBuffer = createWhiteNoiseBuffer(10);
     }
 
     destroy(){
         this._output.disconnect();
         this._output = null;
-        this._noteManager.destroy();
+        this._noteManager.Panic();
     }
 
     panic(){
-        this._noteManager.panic();
+        this._noteManager.Panic();
     }
 }

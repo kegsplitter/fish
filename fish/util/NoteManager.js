@@ -1,54 +1,41 @@
+import { getAudioContext } from './AudioContext.js';
 import Clone from './Clone.js';
 import Mtof from'./Mtof.js';
 
-class NoteManager{
-    // create function needs to be something that takes midi and audio node and outputs
-    // a stop function
-    constructor(createFunction, midiInputPipe){
-      this.destroyHash = {};
-      this.createFunction = createFunction;
+export function NoteManager(playF){
+  let noteEndHash = {};
 
-      if(midiInputPipe) this._unWatchMidiInput = midiInputPipe.Connect(note => this.push(note));
-    }
+  function Push(note){
+      note = Clone(note);
+      note.hz = Mtof(note.note);
+      const isEndNote = note.velocity === 0;
 
-    push(noteObject){
-      noteObject = Clone(noteObject);
-      // find hz (for free)
-      if(noteObject.note) noteObject.hz = Mtof(noteObject.note);
+      if(isEndNote){
+        const endF = noteEndHash[note.note];
+        if(!endF) return;
 
-      // if this is velocity 0 then destroy
-      if(noteObject.velocity === 0) {
-        this.destroyNote(noteObject.note);
+        endF(note.timestamp);
+        delete noteEndHash[note.note];
       } else {
-        // if this note is being played then destroy the old
-        this.destroyNote(noteObject.note, noteObject.timeStamp);
-        this.destroyHash[noteObject.note] = this.createFunction(noteObject);
+        if(noteEndHash[note.note]) return;
+        noteEndHash[note.note] = playF(note);
       }
-      
-    }
-
-    destroyNote(note, timeStamp){
-      if(this.destroyHash[note]){
-        this.destroyHash[note](timeStamp);
-        delete this.destroyHash[note];
-      }
-    }
-
-    pushOnly(){
-      return (noteObject)=>this.push(noteObject);
-    }
-
-    panic(){
-      Object.keys(this.destroyHash)
-        .forEach(key => this.destroyNote(key));
-    }
-
-    destroy(){
-      this.panic();
-      this.destroyHash = null;
-      this.createFunction = null;
-      if(this._unWatchMidiInput) this._unWatchMidiInput();
-    }
   }
 
+  function Panic(){
+    const ac = getAudioContext();
+    for(const key in noteEndHash) {
+      noteEndHash[key](ac.currentTime);
+    }
+
+    noteEndHash = {};
+  }
+
+  return {
+      Push,
+      Panic
+  }
+}
+
   export default NoteManager;
+  
